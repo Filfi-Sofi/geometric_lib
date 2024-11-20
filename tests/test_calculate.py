@@ -1,15 +1,121 @@
 import unittest
-from geometry import calculate_area, calculate_perimeter
+from calculate import calc
+from math import pi
 
-class TestGeometry(unittest.TestCase):
-    def test_calculate_area_circle(self):
-        self.assertAlmostEqual(calculate_area("circle", radius=5), 78.54, places=2)
 
-    def test_calculate_area_rectangle(self):
-        self.assertEqual(calculate_area("rectangle", width=4, height=5), 20)
+class TestCalculate(unittest.TestCase):
+    def test_circle_area(self):
+        fig = 'circle'
+        func = 'area'
+        size = [1]
+        res = calc(fig, func, size)
+        self.assertEqual(res, pi)
 
-    def test_calculate_perimeter_circle(self):
-        self.assertAlmostEqual(calculate_perimeter("circle", radius=5), 31.42, places=2)
+    def test_square_area(self):
+        fig = 'square'
+        func = 'area'
+        size = [1]
+        res = calc(fig, func, size)
+        self.assertEqual(res, 1)
 
-    def test_calculate_perimeter_rectangle(self):
-        self.assertEqual(calculate_perimeter("rectangle", width=4, height=5), 18)
+    def test_triangle_area(self):
+        fig = 'triangle'
+        func = 'area'
+        size = [5, 12, 13]
+        res = calc(fig, func, size)
+        self.assertEqual(res, 30)
+
+    def test_circle_perimeter(self):
+        fig = 'circle'
+        func = 'perimeter'
+        size = [1]
+        res = calc(fig, func, size)
+        self.assertEqual(res, 2 * pi)
+
+    def test_square_perimeter(self):
+        fig = 'square'
+        func = 'perimeter'
+        size = [1]
+        res = calc(fig, func, size)
+        self.assertEqual(res, 4)
+
+    def test_triangle_perimeter(self):
+        fig = 'triangle'
+        func = 'perimeter'
+        size = [5, 12, 13]
+        res = calc(fig, func, size)
+        self.assertEqual(res, 30)
+
+    def test_wrong_fig(self):
+        fig = 'rectangle'
+        func = 'area'
+        size = [1]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_wrong_func(self):
+        fig = 'circle'
+        func = 'diagonal'
+        size = [1]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_wrong_size(self):
+        fig = 'square'
+        func = 'area'
+        size = [1, 2]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_neg_size_area_circle(self):
+        fig = 'circle'
+        func = 'area'
+        size = [-1]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_neg_size_area_square(self):
+        fig = 'square'
+        func = 'area'
+        size = [-1]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_neg_size_area_triangle(self):
+        fig = 'triangle'
+        func = 'area'
+        size = [-5, -12, -13]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_neg_size_perimeter_circle(self):
+        fig = 'circle'
+        func = 'perimeter'
+        size = [-1]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_neg_size_perimeter_square(self):
+        fig = 'square'
+        func = 'perimeter'
+        size = [-1]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_neg_size_perimeter_triangle(self):
+        fig = 'triangle'
+        func = 'perimeter'
+        size = [-5, -12, -13]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+    def test_wrong_size_triangle(self):
+        fig = 'triangle'
+        func = 'area'
+        size = [1, 2, 10]
+        with self.assertRaises(AssertionError):
+            calc(fig, func, size)
+
+
+if name == '__main__':
+    unittest.main()
