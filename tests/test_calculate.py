@@ -117,5 +117,5 @@ class TestCalculate(unittest.TestCase):
             calc(fig, func, size)
 
 
-if name == '__main__':
+if __name__ == '__main__':
     unittest.main()
