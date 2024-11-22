@@ -19,3 +19,6 @@
 - Square: `P = 4a`
 - Triangle: `P = a + b + c`
 
+8ba9aeb L-03: Circle and square added
+d76db2a L-04: Add calculate.py
+51c40eb L-04: Doc updated for triangle
