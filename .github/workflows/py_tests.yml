@@ -3,11 +3,11 @@ name: Tests Workflow
 on:
   push:
     branches:
-      - master
+      - main
       - release
   pull_request:
     branches:
-      - master
+      - main
       - release
       - develop
 
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FULL_NAME: "Филиппова Софья"
-      GROUP_NUMBER: "17"
+      GROUP_NUMBER: "M3117"
 
     steps:
       - name: Checkout repository
