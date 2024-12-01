@@ -30,14 +30,6 @@ def calc(fig, func, size):
     # Проверка на неотрицательность аргументов
     assert all(s >= 0 for s in size)
 
-    # Проверка на существование треугольника
-    if fig == 'triangle':
-        a, b, c = size
-        assert a + b > c and a + c > b and b + c > a
-
-    result = eval(f'{fig}.{func}(*{size})')
-    return result
-
 
 if __name__ == "__main__":
     func = ''
