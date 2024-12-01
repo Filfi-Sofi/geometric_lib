@@ -1,4 +1,7 @@
 from math import sqrt
+if fig == 'triangle':
+        a, b, c = size
+        assert a + b > c and a + c > b and b + c > a
 
 
 def area(a, b, c):
