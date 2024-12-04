@@ -1,121 +1,53 @@
-import unittest
-from calculate import calc
-from math import pi
+import circle
+import square
+import triangle
+
+figs = ['circle', 'square', 'triangle']
+funcs = ['perimeter', 'area']
+sizes = {
+    'circle-area': 1,
+    'circle-perimeter': 1,
+    'square-area': 1,
+    'square-perimeter': 1,
+    'triangle-area': 3,
+    'triangle-perimeter': 3
+}
 
 
-class TestCalculate(unittest.TestCase):
-    def test_circle_area(self):
-        fig = 'circle'
-        func = 'area'
-        size = [1]
-        res = calc(fig, func, size)
-        self.assertEqual(res, pi)
+def calc(fig, func, size):
+    assert fig in figs, "Invalid figure"
+    assert func in funcs, "Invalid function"
 
-    def test_square_area(self):
-        fig = 'square'
-        func = 'area'
-        size = [1]
-        res = calc(fig, func, size)
-        self.assertEqual(res, 1)
+    key = f'{fig}-{func}'
+    args = sizes.get(key)
+    assert args is not None
+    assert len(size) == args
 
-    def test_triangle_area(self):
-        fig = 'triangle'
-        func = 'area'
-        size = [5, 12, 13]
-        res = calc(fig, func, size)
-        self.assertEqual(res, 30)
+    assert all(s >= 0 for s in size)
 
-    def test_circle_perimeter(self):
-        fig = 'circle'
-        func = 'perimeter'
-        size = [1]
-        res = calc(fig, func, size)
-        self.assertEqual(res, 2 * pi)
+    if fig == "triangle":
+        a, b, c = size
+        assert a + b > c and a + c > b and b + c > a
 
-    def test_square_perimeter(self):
-        fig = 'square'
-        func = 'perimeter'
-        size = [1]
-        res = calc(fig, func, size)
-        self.assertEqual(res, 4)
-
-    def test_triangle_perimeter(self):
-        fig = 'triangle'
-        func = 'perimeter'
-        size = [5, 12, 13]
-        res = calc(fig, func, size)
-        self.assertEqual(res, 30)
-
-    def test_wrong_fig(self):
-        fig = 'rectangle'
-        func = 'area'
-        size = [1]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_wrong_func(self):
-        fig = 'circle'
-        func = 'diagonal'
-        size = [1]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_wrong_size(self):
-        fig = 'square'
-        func = 'area'
-        size = [1, 2]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_neg_size_area_circle(self):
-        fig = 'circle'
-        func = 'area'
-        size = [-1]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_neg_size_area_square(self):
-        fig = 'square'
-        func = 'area'
-        size = [-1]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_neg_size_area_triangle(self):
-        fig = 'triangle'
-        func = 'area'
-        size = [-5, -12, -13]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_neg_size_perimeter_circle(self):
-        fig = 'circle'
-        func = 'perimeter'
-        size = [-1]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_neg_size_perimeter_square(self):
-        fig = 'square'
-        func = 'perimeter'
-        size = [-1]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_neg_size_perimeter_triangle(self):
-        fig = 'triangle'
-        func = 'perimeter'
-        size = [-5, -12, -13]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
-
-    def test_wrong_size_triangle(self):
-        fig = 'triangle'
-        func = 'area'
-        size = [1, 2, 10]
-        with self.assertRaises(AssertionError):
-            calc(fig, func, size)
+    result = eval(f'{fig}.{func}(*{size})')
+    return result
 
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    func = ''
+    fig = ''
+    size = []
+
+    while fig not in figs:
+        fig = input(f"Enter figure name, available are {figs}:\n")
+
+    while func not in funcs:
+        func = input(f"Enter function name, available are {funcs}:\n")
+
+    while len(size) != sizes.get(f"{fig}-{func}", 1):
+        size = list(map(int, input(
+            "Input figure sizes separated by space, 1 for circle and square:\n"
+        ).split()))
+
+    result = calc(fig, func, size)
+    print(f"Result: {result}")
