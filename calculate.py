@@ -1,50 +1,49 @@
-import circle
-import square
-import triangle
-
-figs = ['circle', 'square', 'triangle']
-funcs = ['perimeter', 'area']
-sizes = {
-    'circle-area': 1,
-    'circle-perimeter': 1,
-    'square-area': 1,
-    'square-perimeter': 1,
-    'triangle-area': 3,
-    'triangle-perimeter': 3
-}
-
+from math import pi
 
 def calc(fig, func, size):
-    # Проверка наличия передаваемого аргумента fig в figs
-    assert fig in figs
+    if func == 'area':
+        if fig == 'circle':
+            if len(size) == 1 and size[0] > 0:
+                return pi * size[0] ** 2
+            else:
+                raise AssertionError("Invalid parameters for circle area")
+        elif fig == 'square':
+            if len(size) == 1 and size[0] > 0:
+                return size[0] ** 2
+            else:
+                raise AssertionError("Invalid parameters for square area")
+        elif fig == 'triangle':
+            if len(size) == 3 and all(s > 0 for s in size):
+                a, b, c = size
+                # Проверка существования треугольника
+                if a + b > c and a + c > b and b + c > a:
+                    s = (a + b + c) / 2
+                    return (s * (s - a) * (s - b) * (s - c)) ** 0.5  # Формула Герона
+                else:
+                    raise AssertionError("Invalid triangle sides")
+            else:
+                raise AssertionError("Invalid parameters for triangle area")
+        else:
+            raise AssertionError("Unknown figure for area calculation")
 
-    # Проверка наличия передаваемого аргумента func в funcs
-    assert func in funcs
-
-    # Проверка на количество аргументов
-    key = f'{fig}-{func}'
-    expected_args = sizes.get(key)
-    assert expected_args is not None
-    assert len(size) == expected_args
-
-    # Проверка на неотрицательность аргументов
-    assert all(s >= 0 for s in size)
-
-
-if __name__ == "__main__":
-    func = ''
-    fig = ''
-    size = list()
-
-    while fig not in figs:
-        fig = input(f"Enter figure name, avaliable are {figs}:\n")
-
-    while func not in funcs:
-        func = input(f"Enter function name, avaliable are {funcs}:\n")
-
-    while len(size) != sizes.get(f"{func}-{fig}", 1):
-        size = list(map(int, input(
-            "Input figure sizes separated by space, 1 for circle and square\n"
-        ).split(' ')))
-
-    calc(fig, func, size)
+    elif func == 'perimeter':
+        if fig == 'circle':
+            if len(size) == 1 and size[0] > 0:
+                return 2 * pi * size[0]
+            else:
+                raise AssertionError("Invalid parameters for circle perimeter")
+        elif fig == 'square':
+            if len(size) == 1 and size[0] > 0:
+                return 4 * size[0]
+            else:
+                raise AssertionError("Invalid parameters for square perimeter")
+        elif fig == 'triangle':
+            if len(size) == 3 and all(s > 0 for s in size):
+                return sum(size)
+            else:
+                raise AssertionError("Invalid parameters for triangle perimeter")
+        else:
+            raise AssertionError("Unknown figure for perimeter calculation")
+    
+    else:
+        raise AssertionError("Unknown function")
